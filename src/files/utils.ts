@@ -426,7 +426,15 @@ export class Board {
     this.keyboard.set(event.key, true);
     event.preventDefault();
     // check for ctrl space
-
+    const deleteButton = this.keyboard.get("Delete");
+    console.log(deleteButton);
+    if (deleteButton) {
+      if (this.selectedBox) {
+        console.log("sdfsfsd");
+        this.removeBlock(this.selectedBox);
+        return;
+      }
+    }
     if (this.selectedBox) {
       return;
     }
@@ -489,6 +497,14 @@ export class Board {
       if (edge.id == edgeId) return true;
     }
     return false;
+  }
+
+  removeBlock(block: Block) {
+    this.edges = this.edges.filter((edge) => !edge.id.includes(block.id));
+    this.blocks = this.blocks.filter((blck) => blck.id != block.id);
+    this.selectedBox = null;
+    this.hoverBlock = null;
+    this.draw();
   }
 
   addEdges(from: Block, to: Block) {
