@@ -1,3 +1,5 @@
+import { Point } from "./utils";
+
 export class Block {
   width = 200;
   height = 80;

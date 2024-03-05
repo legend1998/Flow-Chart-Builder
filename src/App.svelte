@@ -48,6 +48,7 @@ font-size: 12px;
     <p class="">zoom  - Scroll</p>
     <p class="">Pan  - Space + mouse</p>
   </div>
+  <div class="">Tools</div>
   </div>
   
  </div>

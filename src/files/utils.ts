@@ -75,9 +75,9 @@ interface EdgePoint {
 }
 
 export class Block {
-  width = 150;
-  height = 50;
-  text = "block";
+  width = 180;
+  height = 70;
+  text = "Block";
   type: BlockTypes;
   id: string;
   radius: number = 10;
@@ -170,7 +170,10 @@ export class Block {
       this.text = this.text.slice(0, this.text.length - 1);
       return;
     }
-    if (["Control", "Alt", "Shift", "Tab", "CapsLock"].includes(letter)) return;
+    if (
+      ["Control", "Alt", "Shift", "Tab", "CapsLock", "Delete"].includes(letter)
+    )
+      return;
     if (letter == "Enter") {
       this.text += "\n";
       return;
@@ -193,10 +196,10 @@ export class Block {
         this.radius
       );
     }
-    ctx.font = "12px Poppins";
+    ctx.font = "normal 18px sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "white";
+    ctx.fillStyle = this.selected ? "#E0218A" : "white";
     ctx.stroke();
     ctx.fillText(
       this.text,
@@ -252,6 +255,7 @@ class Edge {
   from: Block;
   to: Block;
   id: string;
+  headlen = 10;
   constructor(from: Block, to: Block) {
     this.from = from;
     this.to = to;
@@ -293,6 +297,11 @@ class Edge {
       edges[1].location.y
     );
     ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle = "#E0218A";
+    ctx.moveTo(edges[1].location.x, edges[1].location.y);
+    ctx.arc(edges[1].location.x, edges[1].location.y, 6, 0, Math.PI * 2);
+    ctx.fill();
   }
 }
 
@@ -533,6 +542,7 @@ export class Board {
         this.selectedBox.selected = false;
       }
       this.selectedBox = null;
+      this.draw();
     }
   }
 
